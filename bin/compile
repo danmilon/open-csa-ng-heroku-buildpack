@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -e
+set -o pipefail
+
+build_dir=$1
+cd $build_dir
+ls
+export CSA_ENVIRONMENT=development
+export PATH=:/usr/local/bin:$PATH
+/app/.heroku/python/bin/pip install -r requirements-development.txt
+CSA_ENVIRONMENT=development ./bin/db-setup.py --drop --init --test-data
+exit 0
